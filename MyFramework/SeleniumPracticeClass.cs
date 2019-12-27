@@ -324,7 +324,6 @@ namespace MyFramework
             this.FindElement(By.CssSelector("div.container:nth-child(2) div.row:nth-child(8) div.col-sm-3.text-center:nth-child(5) div.panel.panel-success div.panel-body.text-justify form:nth-child(1) p.text-center.margin-top-20:nth-child(5) > input.btn.btn-default"))?.Click();
             DoWait(5);
 
-            //TrimEnd('','!').Trim()
 
             int quantity = Convert.ToInt32(this.FindElement(By.XPath("//table[1]/tbody[1]/tr[1]/td[2]")).Text);
             int pricePerItem = Convert.ToInt32(this.FindElement(By.XPath("//table[1]/tbody[1]/tr[1]/td[3]")).Text.Substring(1));
@@ -340,7 +339,6 @@ namespace MyFramework
             else
                 Assert.Fail($"Test Failed! Value is {actualValue}$ but should be {expectedValue}$.");
 
-            //Console.WriteLine(itemPrice);
         }
 
         [SetUp]
