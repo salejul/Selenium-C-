@@ -34,7 +34,6 @@ namespace MyFramework
         }
 
 
-
         [Test]
         [Author("Aleksandar")]
         [Category("FirstFlight")]
@@ -303,9 +302,7 @@ namespace MyFramework
             else
                 Assert.Fail($"Test Failed! Value is {actualValue}$ but should be {expectedValue}$.");
              
-
             //Console.WriteLine(itemPrice);
-
 
         }
 
