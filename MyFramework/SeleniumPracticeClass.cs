@@ -341,11 +341,80 @@ namespace MyFramework
 
         }
 
+        [Test]
+        [Category("Cas34")]
+        [Author("Aleksandar")]
+        public void ToolsQAPracticeForm()
+        {
+            this.NavigateTo("https://www.toolsqa.com/automation-practice-form");
+            this.FindElement(By.XPath("//a[@id='cookie_action_close_header']"))?.Click();
+            this.FindElement(By.XPath("//input[@name='firstname']"))?.SendKeys("Mickey");
+            this.FindElement(By.XPath("//input[@name='lastname']"))?.SendKeys("Mouse");
+            this.FindElement(By.XPath("//input[@id='sex-0']']"))?.Click();
+            this.FindElement(By.CssSelector("#exp-2"))?.Click();
+            this.FindElement(By.XPath("//input[@id='datepicker']"))?.SendKeys("11/12/2020");
+            this.FindElement(By.XPath("//input[@id='photo']"))?.SendKeys(@"C:\Users\DmoDe\Downloads\learn_python_3.png");
+            this.FindElement(By.CssSelector("#tool-2"))?.Click();
+            IWebElement continent = this.FindElement(By.XPath("//select[@id='continents']"));
+            var selectContinent = new SelectElement(continent);
+            selectContinent.SelectByValue("AN");
+            IWebElement multi = this.FindElement(By.CssSelector("#continentsmultiple"));
+            var multipleSelect = new SelectElement(multi);
+            multipleSelect.SelectByValue("EU");
+            multipleSelect.SelectByValue("SA");
+            IWebElement commands = this.FindElement(By.CssSelector("#selenium_commands"));
+            var multipleCommands = new SelectElement(commands);
+            multipleCommands.SelectByText("Switch Commands");
+            multipleCommands.SelectByText("WebElement Commands");
+            DoWait(4);
+            this.FindElement(By.XPath("/aside[@id='sidebar']//input[3]"))?.Click();
+            this.FindElement(By.XPath("//html[1]/body[1]/div[12]/div[1]/div[2]/div[1]/div[2]/img[1]']"))?.Click();
+            DoWait(5);
+
+        }
+
+        [Test]
+        [Category("Cas34")]
+        [Author("Aleksandar")]
+        public void DemoQA()
+        {
+            this.NavigateTo("https://demoqa.com/tooltip-and-double-click/");
+            //double click
+            IWebElement doubleClick = this.FindElement(By.CssSelector("#doubleClickBtn"));
+            Actions click2 = new Actions(this.Driver);
+            click2.DoubleClick(doubleClick).Perform();
+            DoWait(3);
+            IAlert alertDClick = this.Driver.SwitchTo().Alert();
+            alertDClick.Accept();
+            DoWait(3);
+            //rignt click button
+            IWebElement rightClick = this.FindElement(By.CssSelector("#rightClickBtn"));
+            Actions rclick = new Actions(this.Driver);
+            rclick.ContextClick(rightClick).Perform();
+            DoWait(3);
+            this.FindElement(By.XPath("//div[contains(text(),'Edit this')]"))?.Click();
+            IAlert alertRClick = this.Driver.SwitchTo().Alert();
+            Console.WriteLine(alertRClick.Text);
+            alertRClick.Accept();
+            DoWait(3);
+            //hover
+            IWebElement hover = this.FindElement(By.CssSelector("#tooltipDemo"));
+            Actions hoverToElement = new Actions(this.Driver);
+            hoverToElement.MoveToElement(hover).Perform();
+            DoWait(4);
+            if (hover.Text.Contains("We ask for your age"))
+                Assert.Pass();
+            else
+                Assert.Fail("Something went wrong!!!!");
+
+        }
+
+
         [SetUp]
         public void SetUpTests()
         {
-            //this.Driver = new FirefoxDriver();
-            this.Driver = new ChromeDriver();
+            this.Driver = new FirefoxDriver();
+            //this.Driver = new ChromeDriver();
             this.Driver.Manage().Window.Maximize();
             this.Wait = 3;
         }
