@@ -84,7 +84,7 @@ namespace MyFramework
             {
                 if (this._element == null)
                 {
-                    this._file.Store($"SendKeys: Element not defined, can't send keys.");
+                    //this._file.Store($"SendKeys: Element not defined, can't send keys.");
                     throw new Exception("SendKeys: No element defined, can't send keys.");
                 }
                 else
@@ -121,7 +121,7 @@ namespace MyFramework
             }
             catch (NoSuchElementException)
             {
-                this._file.Store($"FindElement: Element [{Selector.ToString()}] not found");
+                //this._file.Store($"FindElement: Element [{Selector.ToString()}] not found");
             }
             catch (Exception e)
             {

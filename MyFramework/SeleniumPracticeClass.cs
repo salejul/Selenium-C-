@@ -348,27 +348,46 @@ namespace MyFramework
         {
             this.NavigateTo("https://www.toolsqa.com/automation-practice-form");
             this.FindElement(By.XPath("//a[@id='cookie_action_close_header']"))?.Click();
+            DoWait(1);
             this.FindElement(By.XPath("//input[@name='firstname']"))?.SendKeys("Mickey");
-            this.FindElement(By.XPath("//input[@name='lastname']"))?.SendKeys("Mouse");
-            this.FindElement(By.XPath("//input[@id='sex-0']']"))?.Click();
-            this.FindElement(By.CssSelector("#exp-2"))?.Click();
+            DoWait(1);
+            this.FindElement(By.CssSelector("#lastname"))?.SendKeys("Mouse");
+            DoWait(1);
+            this.FindElement(By.CssSelector("#sex-0"))?.Click();
+            DoWait(1);
+            this.FindElement(By.CssSelector("#exp-1"))?.Click();
+            DoWait(1);
             this.FindElement(By.XPath("//input[@id='datepicker']"))?.SendKeys("11/12/2020");
+
+
+            DoWait(10);
+            IWebElement image = FindElement(By.XPath("//img[@class='lazyloading']"));
+            if (image.Displayed)
+                image.Click();
             this.FindElement(By.XPath("//input[@id='photo']"))?.SendKeys(@"C:\Users\DmoDe\Downloads\learn_python_3.png");
-            this.FindElement(By.CssSelector("#tool-2"))?.Click();
-            IWebElement continent = this.FindElement(By.XPath("//select[@id='continents']"));
-            var selectContinent = new SelectElement(continent);
-            selectContinent.SelectByValue("AN");
-            IWebElement multi = this.FindElement(By.CssSelector("#continentsmultiple"));
-            var multipleSelect = new SelectElement(multi);
-            multipleSelect.SelectByValue("EU");
-            multipleSelect.SelectByValue("SA");
-            IWebElement commands = this.FindElement(By.CssSelector("#selenium_commands"));
-            var multipleCommands = new SelectElement(commands);
-            multipleCommands.SelectByText("Switch Commands");
-            multipleCommands.SelectByText("WebElement Commands");
-            DoWait(4);
-            this.FindElement(By.XPath("/aside[@id='sidebar']//input[3]"))?.Click();
-            this.FindElement(By.XPath("//html[1]/body[1]/div[12]/div[1]/div[2]/div[1]/div[2]/img[1]']"))?.Click();
+            DoWait(1);
+            this.FindElement(By.XPath("//input[@id = 'profession-1' and @value = 'Automation Tester']"))?.Click();
+            this.DoWait(1);
+            this.FindElement(By.XPath("//input[@id = 'tool-1' and @value = 'Selenium IDE']"))?.Click();
+            this.DoWait(1);
+            string selectByText = "Europe";
+            IWebElement el = this.FindElement(By.Id("continents"));
+            var select = new SelectElement(el);
+            select.SelectByText(selectByText);
+            this.DoWait(1);
+            string selectByText1 = "Europe";
+            IWebElement el1 = this.FindElement(By.Id("continentsmultiple"));
+            var select1 = new SelectElement(el1);
+            select1.SelectByText("Asia");
+            select1.SelectByText(selectByText1);
+            this.DoWait(1);
+            string selectByText2 = "Browser Commands";
+            IWebElement el2 = this.FindElement(By.Id("selenium_commands"));
+            var select2 = new SelectElement(el2);
+            select2.SelectByText(selectByText2);
+            select2.SelectByText("Navigation Commands");
+
+
             DoWait(5);
 
         }
@@ -376,7 +395,7 @@ namespace MyFramework
         [Test]
         [Category("Cas34")]
         [Author("Aleksandar")]
-        public void DemoQA()
+        public void DemoQAClicks()
         {
             this.NavigateTo("https://demoqa.com/tooltip-and-double-click/");
             //double click
@@ -409,12 +428,90 @@ namespace MyFramework
 
         }
 
+        [Test]
+        [Category("Cas34")]
+        [Author("Aleksandar")]
+        public void DemoQASelectable()
+        {
+            this.NavigateTo("https://demoqa.com/selectable/");
+            var multiple = this.FindElements(By.XPath("//ol[1]/li"));
+            foreach (var item in multiple)
+            {
+                item?.Click();
+                DoWait(1);
+            }
+
+        }
+
+        [Test]
+        [Category("Cas34")]
+        [Author("Aleksandar")]
+        public void DemoQADroppable() {
+
+            this.NavigateTo("https://demoqa.com/droppable/");
+            IWebElement draggable = this.FindElement(By.CssSelector("#draggable"));
+            IWebElement droppable = this.FindElement(By.CssSelector("#droppable"));
+
+            Actions dnd = new Actions(this.Driver);
+            dnd.ClickAndHold(draggable).DragAndDropToOffset(draggable, 148, 28).MoveToElement(droppable).Release().Build().Perform();
+            DoWait(4);
+        }
+
+        [Test]
+        [Category("Cas35")]
+        [Author("Aleksandar")]
+        public void DemoQASwitchWindows() {
+
+            this.NavigateTo("https://demoqa.com/automation-practice-switch-windows/");
+
+            //new browser window
+            IWebElement dugmence = this.FindElement(By.CssSelector("#button1"));
+            dugmence.Click();
+            DoWait(1);
+            var popup = this.Driver.WindowHandles[1];
+            this.Driver.SwitchTo().Window(popup);
+            DoWait(3);
+            this.Driver.Close();
+            DoWait(2);
+            this.Driver.SwitchTo().Window(this.Driver.WindowHandles[0]);
+            //new message window
+            IWebElement newWindow = this.FindElement(By.XPath("//button[contains(text(),'New Message Window')]"));
+            newWindow.Click();
+            DoWait(1);
+            var message = this.Driver.WindowHandles[1];
+            this.Driver.SwitchTo().Window(message);
+            this.Driver.Close();
+            this.Driver.SwitchTo().Window(this.Driver.WindowHandles[0]); 
+            //new tab
+            IWebElement newTab = this.FindElement(By.XPath("//button[contains(text(),'New Browser Tab')]"));
+            newTab.Click();
+            DoWait(1);
+            var tab = this.Driver.WindowHandles[1];
+            this.Driver.SwitchTo().Window(tab);
+            this.Driver.Close();
+            this.Driver.SwitchTo().Window(this.Driver.WindowHandles[0]);
+        }
+
+        [Test]
+        [Category("Cas35")]
+        [Author("Aleksandar")]
+        public void DemoQAAutocomplete() {
+
+            this.NavigateTo("https://demoqa.com/autocomplete/");
+            this.FindElement(By.ClassName("ui-autocomplete-input"))?.SendKeys("P");
+            DoWait(5);
+            IWebElement moveto = this.FindElement(By.XPath("//ul[@id='ui-id-1']/li[7]"));
+            Actions autocomplete = new Actions(this.Driver);
+            autocomplete.MoveToElement(moveto).Perform();
+            DoWait(3);
+            moveto.Click();
+        }
 
         [SetUp]
         public void SetUpTests()
         {
-            this.Driver = new FirefoxDriver();
-            //this.Driver = new ChromeDriver();
+            //this.Driver = new FirefoxDriver();
+            this.Driver = new ChromeDriver();
             this.Driver.Manage().Window.Maximize();
             this.Wait = 3;
         }
