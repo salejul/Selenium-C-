@@ -103,7 +103,7 @@ namespace MyFramework
 
             DoWait(4);
 
-            if (poruka.Text == $"Your credit card has been charged with the amount of ${total}")
+            if (poruka.Text == $"Your credit card has been charged with the amount of ${total}" && total == cartSummary)
                 Assert.Pass();
             else
                 Assert.Fail("Error!");
